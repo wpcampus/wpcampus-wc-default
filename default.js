@@ -127,11 +127,14 @@ class WPCampusHTMLElement extends HTMLElement {
 		this.setLocalStorageItem(this.localStorageKey, JSON.stringify(content));
 		this.setLocalStorageItem(this.localStorageKeyTime, Date.now());
 	}
-	getLocalContent() {
+	getLocalContent(forceLocal) {
 		const that = this;
+		if (true !== forceLocal) {
+			forceLocal = false;
+		}
 		return new Promise((resolve, reject) => {
 			try {
-				if (that.isLocalStorageExpired()) {
+				if (false === forceLocal && that.isLocalStorageExpired()) {
 					resolve(null);
 				}
 				let response = that.getLocalStorageItem(that.localStorageKey);
@@ -145,10 +148,16 @@ class WPCampusHTMLElement extends HTMLElement {
 		});
 	}
 	// Will return true if content was loaded from local storage.
-	async loadContentFromLocal() {
-		let content = await this.getLocalContent();
+	async loadContentFromLocal(forceLocal) {
+		if (true !== forceLocal) {
+			forceLocal = false;
+		}
+		let content = await this.getLocalContent(forceLocal);
 		if (content) {
 			this.loadContentHTML(content);
+			return true;
+		} else if (true === forceLocal) {
+			this.loadContentError();
 			return true;
 		}
 		return false;
