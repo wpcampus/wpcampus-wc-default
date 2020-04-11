@@ -138,9 +138,6 @@ class WPCampusHTMLElement extends HTMLElement {
 				if (response) {
 					response = JSON.parse(response);
 				}
-				if (response.length !== that.limit) {
-					resolve(null);
-				}
 				resolve(response);
 			} catch (error) {
 				reject(error);
