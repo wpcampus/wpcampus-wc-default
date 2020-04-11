@@ -56,24 +56,28 @@ class WPCampusRequestElement extends WPCampusHTMLElement {
 		document.removeEventListener("keydown", that.resetTimerFunction);
 		that.loadContentFromRequest();
 	}
-	getRequestURL() {
+	getRequestURL(args) {
+		const finalArgs = {
+			limitKey: "limit",
+			...args
+		};
 		if (!this.requestURL) {
 			return "";
 		}
 		let url = this.requestURL;
 		// Add limit to URL.
-		if (this.limit !== undefined) {
+		if (this.limit !== undefined && finalArgs.limitKey) {
 			if (url.search(/\?/g) >= 0) {
 				url += "&";
 			} else {
 				url += "?";
 			}
-			url += `limit=${this.limit}`;
+			url += `${finalArgs.limitKey}=${this.limit}`;
 		}
 		return url;
 	}
-	requestContent() {
-		const url = this.getRequestURL();
+	requestContent(requestArgs) {
+		const url = this.getRequestURL(requestArgs);
 		return new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
 			request.open("GET", url);
