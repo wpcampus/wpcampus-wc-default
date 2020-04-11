@@ -193,14 +193,18 @@ class WPCampusHTMLElement extends HTMLElement {
       <div class="wpc-container wpc-${id}__container">` + template + `</div>
     </div>`;
 	}
+	getComponentCSSPrefix() {
+		return "wpc-component";
+	}
 	render() {
 		const that = this;
 		return new Promise((resolve, reject) => {
 			if (!that.isConnected() || that.isRendering()) {
 				reject();
 			}
-			that.classList.add("wpc-component");
-			that.classList.add(`wpc-component--${that.componentID}`);
+			const cssPrefix = that.getComponentCSSPrefix();
+			that.classList.add(cssPrefix);
+			that.classList.add(`${cssPrefix}--${that.componentID}`);
 			resolve();
 		});
 	}
