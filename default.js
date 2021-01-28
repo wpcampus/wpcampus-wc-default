@@ -33,6 +33,7 @@ class WPCampusHTMLElement extends HTMLElement {
 		}
 		this.shadow = this.attachShadow({ mode: mode });
 	}
+	// Doesn't work. Removed from components.
 	addStyles(stylesheet, toShadow) {
 		const styles = document.createElement("style");
 		styles.appendChild(document.createTextNode(stylesheet));
