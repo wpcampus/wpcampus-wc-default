@@ -1,6 +1,6 @@
 {
 	"name": "@wpcampus/wpcampus-wc-default",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "The default elements required for web components created by the WPCampus organization.",
 	"main": "index.js",
 	"repository": {
